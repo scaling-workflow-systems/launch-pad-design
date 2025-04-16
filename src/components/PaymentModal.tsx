@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import Button from '@/components/Button';
+import { Button } from '@/components/ui/button';
 import { createTestPaymentIntent } from '@/utils/stripeUtils';
 import { Package, Clock } from 'lucide-react';
 
@@ -12,6 +13,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ amount, productName }) => {
   const [showComingSoon, setShowComingSoon] = useState(false);
 
   const handlePaymentSubmit = async () => {
+    // Fixed by adding email parameter
     const paymentIntent = await createTestPaymentIntent(amount, 'guest@example.com');
     
     if (paymentIntent) {
@@ -50,3 +52,4 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ amount, productName }) => {
 };
 
 export default PaymentModal;
+
