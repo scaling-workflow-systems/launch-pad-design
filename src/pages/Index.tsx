@@ -1,25 +1,19 @@
 
-import Hero from "@/components/Hero";
-import Features from "@/components/Features";
-import Testimonials from "@/components/Testimonials";
-import Footer from "@/components/Footer";
 import { AuthProvider } from "@/hooks/useAuth";
-import PaymentModal from "@/components/PaymentModal";
+import PaymentForm from "@/components/PaymentForm";
 
 const Index = () => {
   return (
     <AuthProvider>
-      <div className="min-h-screen">
-        <Hero />
-        <Features />
-        <div className="container mx-auto my-12">
-          <PaymentModal 
-            amount={4999} 
-            productName="Test Product" 
-          />
-        </div>
-        <Testimonials />
-        <Footer />
+      <div className="min-h-screen bg-gray-900 text-white">
+        <main className="container mx-auto px-4 py-16">
+          <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+            Simple Payment Demo
+          </h1>
+          <div className="max-w-md mx-auto">
+            <PaymentForm amount={4999} />
+          </div>
+        </main>
       </div>
     </AuthProvider>
   );
