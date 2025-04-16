@@ -1,11 +1,10 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { CreditCard } from "lucide-react";
-import { toast } from "sonner";
 
 const Index = () => {
   const [showPayment, setShowPayment] = useState(false);
+  const [email, setEmail] = useState("");
 
   const handlePayment = async () => {
     try {
@@ -13,30 +12,29 @@ const Index = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: 'guest@example.com',
+          email: email || 'guest@example.com',
           amount: 0
         })
       });
 
       if (!response.ok) throw new Error('Payment failed');
-      
-      toast.success('Thank you for your interest!');
+      alert('Thank you for your interest!');
       setShowPayment(false);
     } catch (error) {
-      toast.error('Something went wrong');
+      alert('Something went wrong');
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <div className="fixed top-4 right-4">
-        <Button 
+        <button 
           onClick={() => setShowPayment(true)}
-          className="bg-[#9b87f5] hover:bg-[#7E69AB]"
+          className="inline-flex items-center px-4 py-2 rounded bg-purple-600 hover:bg-purple-700 transition-colors"
         >
           <CreditCard className="mr-2 h-4 w-4" />
           Sign Up
-        </Button>
+        </button>
       </div>
 
       <main className="container mx-auto px-4">
@@ -52,20 +50,26 @@ const Index = () => {
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
               <div className="bg-gray-800 p-8 rounded-xl max-w-md w-full">
                 <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
-                <p className="mb-6 text-gray-300">Click below to proceed with the sign-up process.</p>
-                <Button 
-                  onClick={handlePayment} 
-                  className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] mb-4"
+                <p className="mb-6 text-gray-300">Enter your email to proceed with the sign-up process.</p>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2 mb-4 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500"
+                />
+                <button 
+                  onClick={handlePayment}
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded mb-4 transition-colors"
                 >
                   Continue to Sign Up
-                </Button>
-                <Button 
-                  variant="ghost" 
+                </button>
+                <button 
                   onClick={() => setShowPayment(false)}
-                  className="w-full"
+                  className="w-full bg-transparent hover:bg-gray-700 text-white py-2 px-4 rounded border border-gray-600 transition-colors"
                 >
                   Cancel
-                </Button>
+                </button>
               </div>
             </div>
           )}
