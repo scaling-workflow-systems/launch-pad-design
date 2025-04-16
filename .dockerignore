@@ -5,3 +5,4 @@ dist
 .gitignore
 .env
 *.log
+supabase-data/

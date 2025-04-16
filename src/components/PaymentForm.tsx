@@ -10,19 +10,56 @@ interface PaymentFormProps {
   amount: number;
 }
 
-const PaymentForm: React.FC<PaymentFormProps> = () => {
+const PaymentForm: React.FC<PaymentFormProps> = ({ amount = 0 }) => {
   const [email, setEmail] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvc, setCvc] = useState('');
+  const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (!email || !cardNumber || !expiry || !cvc) {
+      setError("All fields are required");
       return;
     }
-    setShowSuccess(true);
+    
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // For demo purposes, we'll just simulate a successful API call
+      // In production, you would call your backend API
+      const response = await fetch('http://localhost:8000/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          amount: amount || 0, // Amount in cents
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Payment failed. Please try again.');
+      }
+      
+      const data = await response.json();
+      console.log("Payment intent created:", data);
+      
+      // In a real implementation, you would use Stripe.js to confirm the payment
+      // using the clientSecret from the response
+      
+      setShowSuccess(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Payment processing failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (showSuccess) {
@@ -47,13 +84,13 @@ const PaymentForm: React.FC<PaymentFormProps> = () => {
     <Card className="bg-gray-800 border-gray-700">
       <CardHeader>
         <CardTitle className="text-xl text-center">
-          Sign Up - $0.00
+          Sign Up - ${(amount / 100).toFixed(2)}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">Email*</Label>
             <Input
               id="email"
               type="email"
@@ -65,7 +102,7 @@ const PaymentForm: React.FC<PaymentFormProps> = () => {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="card">Card Number</Label>
+            <Label htmlFor="card">Card Number*</Label>
             <Input
               id="card"
               type="text"
@@ -78,7 +115,7 @@ const PaymentForm: React.FC<PaymentFormProps> = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="expiry">Expiry</Label>
+              <Label htmlFor="expiry">Expiry*</Label>
               <Input
                 id="expiry"
                 type="text"
@@ -90,7 +127,7 @@ const PaymentForm: React.FC<PaymentFormProps> = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="cvc">CVC</Label>
+              <Label htmlFor="cvc">CVC*</Label>
               <Input
                 id="cvc"
                 type="text"
@@ -102,14 +139,16 @@ const PaymentForm: React.FC<PaymentFormProps> = () => {
               />
             </div>
           </div>
+          {error && <div className="text-red-500 text-sm">{error}</div>}
           <div className="text-xs text-gray-400 mt-4">
             By submitting this form, you agree to share your email for marketing purposes. Payment processing is securely handled by Stripe. Your payment information is encrypted and never stored on our servers.
           </div>
           <Button 
             type="submit" 
             className="w-full bg-purple-600 hover:bg-purple-700"
+            disabled={loading}
           >
-            Sign Up
+            {loading ? "Processing..." : "Sign Up"}
           </Button>
         </form>
       </CardContent>
