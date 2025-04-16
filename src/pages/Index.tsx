@@ -5,6 +5,8 @@ import Button from "@/components/Button";
 import { CreditCard } from "lucide-react";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import Navbar from "@/components/Navbar";
+import FeatureCards from "@/components/FeatureCards";
 
 const Index = () => {
   const [showPayment, setShowPayment] = useState(false);
@@ -13,6 +15,8 @@ const Index = () => {
   return (
     <AuthProvider>
       <div className="min-h-screen bg-gray-900 text-white">
+        <Navbar />
+        
         {/* Fixed Payment Button */}
         <div className={`fixed ${isMobile ? 'bottom-4 right-4' : 'top-4 right-4'} z-50`}>
           <Button onClick={() => setShowPayment(true)} className={isMobile ? 'w-full' : ''}>
@@ -40,6 +44,14 @@ const Index = () => {
             <div className="mt-12 text-gray-400">
               Email us at: support@email.com
             </div>
+          </section>
+
+          {/* Feature Cards Section */}
+          <section className="py-20">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Key Features
+            </h2>
+            <FeatureCards />
           </section>
         </main>
 
