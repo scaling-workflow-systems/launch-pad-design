@@ -1,22 +1,92 @@
 
 import { AuthProvider } from "@/hooks/useAuth";
 import PaymentForm from "@/components/PaymentForm";
+import { Button } from "@/components/ui/button";
+import { CreditCard } from "lucide-react";
+import { useState } from "react";
 
 const Index = () => {
+  const [showPayment, setShowPayment] = useState(false);
+
   return (
     <AuthProvider>
       <div className="min-h-screen bg-gray-900 text-white">
-        <main className="container mx-auto px-4 py-16">
-          <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-            Simple Payment Demo
-          </h1>
-          <div className="max-w-md mx-auto">
-            <PaymentForm amount={4999} />
-          </div>
+        {/* Fixed Payment Button */}
+        <div className="fixed top-4 right-4 z-50">
+          <Button 
+            onClick={() => setShowPayment(true)}
+            className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white"
+          >
+            <CreditCard className="mr-2 h-4 w-4" />
+            Pay Now
+          </Button>
+        </div>
+
+        {/* Landing Page Content */}
+        <main className="container mx-auto px-4">
+          {/* Hero Section */}
+          <section className="py-20 flex flex-col items-center justify-center min-h-screen">
+            <h1 className="text-6xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Next-Gen Payment Solution
+            </h1>
+            <p className="text-xl text-gray-300 mb-12 max-w-2xl text-center">
+              Experience seamless transactions with our cutting-edge payment processing system.
+            </p>
+            
+            {/* Product Demo Image/Video */}
+            <div className="w-full max-w-4xl h-[400px] rounded-xl bg-gray-800 flex items-center justify-center mb-12">
+              <p className="text-gray-400">Product Demo</p>
+            </div>
+
+            {/* Features Grid */}
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl">
+              {features.map((feature, index) => (
+                <div 
+                  key={index}
+                  className="p-6 rounded-lg bg-gray-800/50 backdrop-blur-sm"
+                >
+                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-gray-400">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
         </main>
+
+        {/* Payment Form Modal */}
+        {showPayment && (
+          <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+            <div className="bg-gray-800 p-8 rounded-xl max-w-md w-full">
+              <PaymentForm amount={4999} />
+              <Button 
+                variant="ghost" 
+                onClick={() => setShowPayment(false)}
+                className="mt-4"
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </AuthProvider>
   );
 };
 
+const features = [
+  {
+    title: "Secure Payments",
+    description: "Enterprise-grade security with end-to-end encryption"
+  },
+  {
+    title: "Fast Processing",
+    description: "Lightning-fast transactions processed in milliseconds"
+  },
+  {
+    title: "24/7 Support",
+    description: "Round-the-clock customer support for your peace of mind"
+  }
+];
+
 export default Index;
+
