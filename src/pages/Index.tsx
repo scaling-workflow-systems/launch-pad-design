@@ -20,7 +20,7 @@ const Index = () => {
             className={`bg-[#9b87f5] hover:bg-[#7E69AB] text-white ${isMobile ? 'w-full' : ''}`}
           >
             <CreditCard className="mr-2 h-4 w-4" />
-            Pay Now
+            Sign Up
           </Button>
         </div>
 
