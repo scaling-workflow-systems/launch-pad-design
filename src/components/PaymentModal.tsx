@@ -13,7 +13,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ amount, productName }) => {
   const [showComingSoon, setShowComingSoon] = useState(false);
 
   const handlePaymentSubmit = async () => {
-    const paymentIntent = await createTestPaymentIntent(amount);
+    // Fixed by adding email parameter
+    const paymentIntent = await createTestPaymentIntent(amount, 'guest@example.com');
     
     if (paymentIntent) {
       setShowComingSoon(true);
@@ -51,3 +52,4 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ amount, productName }) => {
 };
 
 export default PaymentModal;
+

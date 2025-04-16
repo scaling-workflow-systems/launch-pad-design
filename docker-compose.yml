@@ -26,26 +26,5 @@ services:
       - ./api:/app
     environment:
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
-      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
-  supabase:
-    image: supabase/supabase-docker:latest
-    ports:
-      - "54321:54321" # Studio
-      - "54322:54322" # API
-      - "54323:54323" # Auth
-      - "54324:54324" # Storage
-    environment:
-      STUDIO_PORT: 54321
-      API_PORT: 54322
-      PGDATABASE: postgres
-      PGUSER: postgres
-      PGPASSWORD: postgres
-      JWT_SECRET: your-super-secret-jwt-token-with-at-least-32-characters
-      ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiJ9.ZopqoUt20nEV9cklpv9e9MBzW8BwNFJwE0doZtV_eEw
-      SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIn0.M2d2z4SFn5C7HlJlaSLfrzuYim9nbY_XI40uWFN_sqA
-    volumes:
-      - ./supabase-data:/var/lib/postgresql/data
