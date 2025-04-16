@@ -195,7 +195,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount = 0 }) => {
             By submitting this form, you agree to share your email for marketing purposes.
             Payment processing is securely handled by Stripe.
           </div>
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button onClick={handleSubmit} className="w-full" disabled={loading}>
             {loading ? "Processing..." : "Sign Up"}
           </Button>
         </form>
