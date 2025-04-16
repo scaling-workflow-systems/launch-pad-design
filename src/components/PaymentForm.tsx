@@ -9,7 +9,7 @@ interface PaymentFormProps {
   amount: number;
 }
 
-const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
+const PaymentForm: React.FC<PaymentFormProps> = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvc, setCvc] = useState('');
@@ -17,7 +17,6 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate payment success
     setShowSuccess(true);
   };
 
@@ -43,20 +42,18 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
     <Card className="bg-gray-800 border-gray-700">
       <CardHeader>
         <CardTitle className="text-xl text-center">
-          Payment Details - ${amount / 100}
+          Payment Details - $0.00
         </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Input
-              type="text"
-              placeholder="Card Number"
-              value={cardNumber}
-              onChange={(e) => setCardNumber(e.target.value)}
-              className="bg-gray-700 border-gray-600 text-white"
-            />
-          </div>
+          <Input
+            type="text"
+            placeholder="Card Number"
+            value={cardNumber}
+            onChange={(e) => setCardNumber(e.target.value)}
+            className="bg-gray-700 border-gray-600 text-white"
+          />
           <div className="grid grid-cols-2 gap-4">
             <Input
               type="text"

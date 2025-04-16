@@ -22,9 +22,8 @@ const Index = () => {
           </Button>
         </div>
 
-        {/* Landing Page Content */}
+        {/* Minimal Landing Page Content */}
         <main className="container mx-auto px-4">
-          {/* Hero Section */}
           <section className="py-20 flex flex-col items-center justify-center min-h-screen">
             <h1 className="text-6xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
               Next-Gen Payment Solution
@@ -34,21 +33,13 @@ const Index = () => {
             </p>
             
             {/* Product Demo Image/Video */}
-            <div className="w-full max-w-4xl h-[400px] rounded-xl bg-gray-800 flex items-center justify-center mb-12">
+            <div className="w-full max-w-4xl h-[400px] rounded-xl bg-gray-800 flex items-center justify-center">
               <p className="text-gray-400">Product Demo</p>
             </div>
 
-            {/* Features Grid */}
-            <div className="grid md:grid-cols-3 gap-8 max-w-4xl">
-              {features.map((feature, index) => (
-                <div 
-                  key={index}
-                  className="p-6 rounded-lg bg-gray-800/50 backdrop-blur-sm"
-                >
-                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-gray-400">{feature.description}</p>
-                </div>
-              ))}
+            {/* Email Support */}
+            <div className="mt-12 text-gray-400">
+              Email us at: support@email.com
             </div>
           </section>
         </main>
@@ -57,7 +48,7 @@ const Index = () => {
         {showPayment && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
             <div className="bg-gray-800 p-8 rounded-xl max-w-md w-full">
-              <PaymentForm amount={4999} />
+              <PaymentForm amount={0} />
               <Button 
                 variant="ghost" 
                 onClick={() => setShowPayment(false)}
@@ -72,21 +63,6 @@ const Index = () => {
     </AuthProvider>
   );
 };
-
-const features = [
-  {
-    title: "Secure Payments",
-    description: "Enterprise-grade security with end-to-end encryption"
-  },
-  {
-    title: "Fast Processing",
-    description: "Lightning-fast transactions processed in milliseconds"
-  },
-  {
-    title: "24/7 Support",
-    description: "Round-the-clock customer support for your peace of mind"
-  }
-];
 
 export default Index;
 
