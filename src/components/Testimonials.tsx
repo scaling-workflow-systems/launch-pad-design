@@ -1,6 +1,6 @@
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Card, { CardContent } from '@/components/Card';
+import Avatar from '@/components/Avatar';
 
 const testimonials = [
   {
@@ -25,26 +25,27 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gray-800">
       <div className="container px-4 mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
           What Our Users Say
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="border-none shadow-lg">
+            <Card key={index} className="border-none">
               <CardContent className="pt-6">
                 <div className="flex items-center mb-4">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src={testimonial.image} />
-                    <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
-                  </Avatar>
+                  <Avatar
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    fallback={testimonial.name}
+                  />
                   <div className="ml-4">
-                    <h3 className="font-semibold">{testimonial.name}</h3>
-                    <p className="text-sm text-gray-600">{testimonial.role}</p>
+                    <h3 className="font-semibold text-white">{testimonial.name}</h3>
+                    <p className="text-sm text-gray-400">{testimonial.role}</p>
                   </div>
                 </div>
-                <p className="text-gray-600">{testimonial.content}</p>
+                <p className="text-gray-300">{testimonial.content}</p>
               </CardContent>
             </Card>
           ))}
